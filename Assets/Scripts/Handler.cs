@@ -6,7 +6,6 @@ public class Handler : MonoBehaviour
     [SerializeField] CubePool _pool;
     [SerializeField] CubeSpawner _spawner;
 
-    private CubeCollisionReporter _collisionReporter;
     private float _minLifeTime = 2f;
     private float _maxLifeTime = 5f;
     private float _spawnInterval = 1f;
@@ -25,8 +24,8 @@ public class Handler : MonoBehaviour
 
             CubeCollisionReporter collisionReporter = cube.GetComponent<CubeCollisionReporter>();
 
-            collisionReporter.PlatfomTouched -= OnCubeTouched;
-            collisionReporter.PlatfomTouched += OnCubeTouched;
+            collisionReporter.PlatformTouched -= OnCubeTouched;
+            collisionReporter.PlatformTouched += OnCubeTouched;
 
             cube.SetColor(cube.DefaultColor);
 

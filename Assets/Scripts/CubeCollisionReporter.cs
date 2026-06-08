@@ -6,7 +6,7 @@ public class CubeCollisionReporter : MonoBehaviour
 {
     private Cube _cube;
 
-    public Action<Cube> PlatfomTouched;
+    public Action<Cube> PlatformTouched;
 
     private void Awake()
     {
@@ -18,6 +18,6 @@ public class CubeCollisionReporter : MonoBehaviour
         if(collision.gameObject.GetComponent<Platform>() == null)
             return;
 
-        PlatfomTouched?.Invoke(_cube);
+        PlatformTouched?.Invoke(_cube);
     }
 }

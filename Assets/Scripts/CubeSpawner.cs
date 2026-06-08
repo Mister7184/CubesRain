@@ -3,7 +3,6 @@ using UnityEngine;
 public class CubeSpawner : MonoBehaviour
 {
     [SerializeField] CubePool _pool;
-
     [SerializeField] private float _spawnPositionX = 4f;
     [SerializeField] private float _spawnPositionZ = 4f;
     [SerializeField] private float _spawnPositionY = 5f;
