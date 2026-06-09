@@ -12,16 +12,26 @@ public class CubePool : MonoBehaviour
     {
         for (int i = 0; i < _startCount; i++)
         {
-            Cube cube = Instantiate(_cubePrefab);
-
-            cube.gameObject.SetActive(false);
-
-            _freeCubes.Enqueue(cube);
+            CreateCube();
         }
+    }
+
+    private void CreateCube() 
+    {
+        Cube cube = Instantiate(_cubePrefab);
+
+        cube.gameObject.SetActive(false);
+
+        _freeCubes.Enqueue(cube);
     }
 
     public Cube Get() 
     {
+        if (_freeCubes.Count == 0)
+        {
+            CreateCube();
+        }
+
         Cube pooledCube = _freeCubes.Dequeue();
 
         pooledCube.gameObject.SetActive(true);
