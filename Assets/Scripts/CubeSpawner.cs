@@ -3,7 +3,7 @@ using UnityEngine;
 
 public class CubeSpawner : MonoBehaviour
 {
-    [SerializeField] CubePool _pool;
+    [SerializeField] private CubePool _cubePool;
     [SerializeField] private float _spawnPositionX = 4f;
     [SerializeField] private float _spawnPositionZ = 4f;
     [SerializeField] private float _spawnPositionY = 5f;
@@ -31,16 +31,13 @@ public class CubeSpawner : MonoBehaviour
 
     public void Spawn() 
     {
-        Cube cube = _pool.Get();
-
-        cube.Deactivate();
+        Cube cube = _cubePool.Get();
 
         float randomPositionX = Random.Range(-_spawnPositionX, _spawnPositionX);
         float randomPositionZ = Random.Range(-_spawnPositionZ, _spawnPositionZ);
 
         cube.transform.position = new Vector3(randomPositionX, _spawnPositionY, randomPositionZ);
 
-        cube.LifeTimeEnded -= OnCubeLifeTimeEnded;
         cube.LifeTimeEnded += OnCubeLifeTimeEnded;
     }
 
@@ -48,6 +45,6 @@ public class CubeSpawner : MonoBehaviour
     {
         cube.LifeTimeEnded -= OnCubeLifeTimeEnded;
 
-        _pool.Release(cube);
+        _cubePool.Release(cube);
     }
 }

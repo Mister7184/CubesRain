@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(Renderer))]
 public class Cube : MonoBehaviour
 {
     private bool _isActivated;
@@ -9,6 +10,7 @@ public class Cube : MonoBehaviour
     private Color _defaultColor = Color.white;
     private float _minLifeTime = 2f;
     private float _maxLifeTime = 5f;
+    private Coroutine _lifeRoutine;
 
     public Action<Cube> LifeTimeEnded;
 
@@ -22,7 +24,7 @@ public class Cube : MonoBehaviour
         if (_isActivated)
             return;
 
-        if (collision.gameObject.GetComponent<Platform>() == null)
+        if (collision.gameObject.TryGetComponent<Platform>(out _) == false)
             return;
 
         Activate();
@@ -33,6 +35,12 @@ public class Cube : MonoBehaviour
         _isActivated = false;
 
         SetColor(_defaultColor);
+
+        if (_lifeRoutine != null) 
+        {
+            StopCoroutine(_lifeRoutine);
+            _lifeRoutine = null;
+        }
     }
 
     public void SetColor(Color color)
@@ -48,7 +56,7 @@ public class Cube : MonoBehaviour
 
         float lifeTime = UnityEngine.Random.Range(_minLifeTime, _maxLifeTime);
 
-        StartCoroutine(ReturnCubeAfterTime(lifeTime));
+        _lifeRoutine = StartCoroutine(ReturnCubeAfterTime(lifeTime));
     }
 
     private IEnumerator ReturnCubeAfterTime(float delay)
